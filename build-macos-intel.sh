@@ -39,7 +39,7 @@ export MACOSX_DEPLOYMENT_TARGET="11.0"
 
 APP_PATH="$DIST_DIR/CodexSessionMigrator.app"
 EXEC_PATH="$APP_PATH/Contents/MacOS/CodexSessionMigrator"
-ZIP_PATH="$DIST_DIR/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip"
+ZIP_PATH="$DIST_DIR/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip"
 
 file "$EXEC_PATH"
 if ! file "$EXEC_PATH" | grep -q "x86_64"; then

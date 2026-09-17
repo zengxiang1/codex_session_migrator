@@ -173,7 +173,9 @@ class MigratorTests(unittest.TestCase):
             ).fetchone()
         self.assertEqual(row[0], "custom")
         self.assertEqual(row[1], "D:/new-project")
-        self.assertEqual(Path(row[2]), imported_files[0])
+        # macOS exposes the same temporary directory through both /var and
+        # /private/var; compare canonical paths rather than display strings.
+        self.assertEqual(Path(row[2]).resolve(), imported_files[0].resolve())
 
         again = migrator.import_transfer_package(target, package)
         self.assertEqual(again["imported"], 0)

@@ -69,16 +69,16 @@ jobs:
           codesign --verify --deep --strict --verbose=2 dist/CodexSessionMigrator.app
           ditto -c -k --sequesterRsrc --keepParent \
             dist/CodexSessionMigrator.app \
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip
-          shasum -a 256 dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip \
-            > dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip.sha256
+            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip
+          shasum -a 256 dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip \
+            > dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip.sha256
 
       - name: Upload Intel Mac artifact
         uses: actions/upload-artifact@v7
         with:
-          name: CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1
+          name: CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2
           path: |
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip.sha256
+            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip
+            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip.sha256
           if-no-files-found: error
           retention-days: 30

@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
 
 
-TOOL_VERSION = "0.2.1"
+TOOL_VERSION = "0.2.2"
 MANIFEST_NAME = "manifest.json"
 TRANSFER_MANIFEST_NAME = "codex-transfer.json"
 TRANSFER_FORMAT_VERSION = 1

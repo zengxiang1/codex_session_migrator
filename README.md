@@ -33,7 +33,7 @@
 推送 `v*` 标签也会自动构建。完成后从该次运行底部下载：
 
 ```text
-CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1
+CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2
 ```
 
 也可以在 Intel Mac 本机运行：
