@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.macos-intel-build/
+build/
+dist/
+*.spec
+*.codexsessions
+.venv/
+venv/
