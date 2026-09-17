@@ -16,17 +16,18 @@ jobs:
 
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           architecture: "x64"
           cache: "pip"
+          cache-dependency-path: "requirements.txt"
 
       - name: Install build dependency
-        run: python -m pip install "pyinstaller==6.16.0"
+        run: python -m pip install -r requirements.txt
 
       - name: Run tests
         run: python -X dev -m unittest -v test_codex_session_migrator.py
@@ -52,16 +53,16 @@ jobs:
           codesign --verify --deep --strict --verbose=2 dist/CodexSessionMigrator.app
           ditto -c -k --sequesterRsrc --keepParent \
             dist/CodexSessionMigrator.app \
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.0.zip
-          shasum -a 256 dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.0.zip \
-            > dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.0.zip.sha256
+            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip
+          shasum -a 256 dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip \
+            > dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip.sha256
 
       - name: Upload Intel Mac artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: CodexSessionMigrator-macOS-Intel-x86_64-v0.2.0
+          name: CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1
           path: |
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.0.zip
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.0.zip.sha256
+            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip
+            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip.sha256
           if-no-files-found: error
           retention-days: 30

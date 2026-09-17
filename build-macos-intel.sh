@@ -20,7 +20,7 @@ fi
 mkdir -p "$BUILD_ROOT" "$DIST_DIR"
 python3 -m venv "$VENV_DIR"
 "$VENV_DIR/bin/python" -m pip install --upgrade pip
-"$VENV_DIR/bin/python" -m pip install "pyinstaller==6.16.0"
+"$VENV_DIR/bin/python" -m pip install -r "$ROOT_DIR/requirements.txt"
 
 cd "$ROOT_DIR"
 "$VENV_DIR/bin/python" -X dev -m unittest -v test_codex_session_migrator.py
@@ -39,7 +39,7 @@ export MACOSX_DEPLOYMENT_TARGET="11.0"
 
 APP_PATH="$DIST_DIR/CodexSessionMigrator.app"
 EXEC_PATH="$APP_PATH/Contents/MacOS/CodexSessionMigrator"
-ZIP_PATH="$DIST_DIR/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.0.zip"
+ZIP_PATH="$DIST_DIR/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.1.zip"
 
 file "$EXEC_PATH"
 if ! file "$EXEC_PATH" | grep -q "x86_64"; then
