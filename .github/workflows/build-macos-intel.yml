@@ -7,7 +7,7 @@ on:
       - "v*"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-macos-intel:
@@ -48,6 +48,11 @@ jobs:
           fi
           exit $status
 
+      - name: Resolve application version
+        run: |
+          version=$(python -c 'import codex_session_migrator as c; print(c.TOOL_VERSION)')
+          echo "APP_VERSION=$version" >> "$GITHUB_ENV"
+
       - name: Build Intel application bundle
         env:
           MACOSX_DEPLOYMENT_TARGET: "11.0"
@@ -69,16 +74,27 @@ jobs:
           codesign --verify --deep --strict --verbose=2 dist/CodexSessionMigrator.app
           ditto -c -k --sequesterRsrc --keepParent \
             dist/CodexSessionMigrator.app \
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip
-          shasum -a 256 dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip \
-            > dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip.sha256
+            "dist/CodexSessionMigrator-macOS-Intel-x86_64-v${APP_VERSION}.zip"
+          shasum -a 256 "dist/CodexSessionMigrator-macOS-Intel-x86_64-v${APP_VERSION}.zip" \
+            > "dist/CodexSessionMigrator-macOS-Intel-x86_64-v${APP_VERSION}.zip.sha256"
 
       - name: Upload Intel Mac artifact
         uses: actions/upload-artifact@v7
         with:
-          name: CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2
+          name: CodexSessionMigrator-macOS-Intel-x86_64-v${{ env.APP_VERSION }}
           path: |
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip
-            dist/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip.sha256
+            dist/CodexSessionMigrator-macOS-Intel-x86_64-v${{ env.APP_VERSION }}.zip
+            dist/CodexSessionMigrator-macOS-Intel-x86_64-v${{ env.APP_VERSION }}.zip.sha256
           if-no-files-found: error
           retention-days: 30
+
+      - name: Publish tagged GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "dist/CodexSessionMigrator-macOS-Intel-x86_64-v${APP_VERSION}.zip" \
+            "dist/CodexSessionMigrator-macOS-Intel-x86_64-v${APP_VERSION}.zip.sha256" \
+            --title "Codex Session Migrator v${APP_VERSION}" \
+            --generate-notes

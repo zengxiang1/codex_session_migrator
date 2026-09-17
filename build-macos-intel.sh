@@ -39,7 +39,8 @@ export MACOSX_DEPLOYMENT_TARGET="11.0"
 
 APP_PATH="$DIST_DIR/CodexSessionMigrator.app"
 EXEC_PATH="$APP_PATH/Contents/MacOS/CodexSessionMigrator"
-ZIP_PATH="$DIST_DIR/CodexSessionMigrator-macOS-Intel-x86_64-v0.2.2.zip"
+APP_VERSION="$("$VENV_DIR/bin/python" -c 'import codex_session_migrator as c; print(c.TOOL_VERSION)')"
+ZIP_PATH="$DIST_DIR/CodexSessionMigrator-macOS-Intel-x86_64-v${APP_VERSION}.zip"
 
 file "$EXEC_PATH"
 if ! file "$EXEC_PATH" | grep -q "x86_64"; then
